@@ -1,0 +1,2 @@
+const { MONGODB_USERNAME, MONGODB_PASSWORD, MONGODB_DB } = process.env;
+export const connectionURI = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@cluster0.ugtlb.mongodb.net/${MONGODB_DB}?retryWrites=true&w=majority&appName=Cluster0`
