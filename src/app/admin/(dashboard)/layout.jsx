@@ -9,8 +9,6 @@ export const metadata = {
 
 export default function DashboardLayout({
     children,
-}: {
-    children: React.ReactNode
 }) {
     return (
         <div className="layout-fixed sidebar-expand-lg bg-body-tertiary">

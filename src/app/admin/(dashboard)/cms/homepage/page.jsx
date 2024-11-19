@@ -1,10 +1,11 @@
+"use client"
 import React from 'react'
 import { useForm } from "react-hook-form"
 
 const page = () => {
 
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch,  formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
         console.log(data);
@@ -38,14 +39,11 @@ const page = () => {
                         <div className="col-md-12">
                             <div className="card card-primary card-outline mb-4">
 
-                                {/*begin::Header*/}
                                 <div className="card-header">
-                                    <div className="card-title">Quick Example</div>
+                                    <div className="card-title">Basic Details</div>
                                 </div>
-                                {/*end::Header*/} {/*begin::Form*/}
-                                <form>
+                                <form >
 
-                                    {/*begin::Body*/}
                                     <div className="card-body">
                                         <div className="mb-3">
                                             <div className="row">
