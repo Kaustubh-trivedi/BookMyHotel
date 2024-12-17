@@ -1,37 +1,31 @@
-
-import mongoose from "mongoose";
 import { NextResponse } from "next/server";
-import { connectionURI } from "../../../../lib/connection";
-import { cms_homepage } from "../../../../lib/model/cms_homepage";
+import path from "path";
+import { writeFile } from "fs/promises";
 
-export async function GET() {
-    await mongoose.connect(connectionURI)
-    return NextResponse.json({ status: true });
-}
-
-export async function POST(request) {
-    try {
-        await mongoose.connect(connectionURI);
-        const payload = await request.json();
-        const findExistingData = await cms_homepage.find();
-        if (findExistingData.length) {
-            const updateData = await cms_homepage.findByIdAndUpdate(
-                findExistingData._id,
-                payload,
-                { new: true }
-            )
-            return NextResponse.json({ code: 200, message: "Data updated successfully.", data: updateData }, { status: 200 })
-        } else {
-            const data = new cms_homepage(payload);
-            const result = await data.save();
-            return NextResponse.json({ code: 200, message: "Data updated successfully.", result: result }, { status: 200 })
-        }
-    } catch (error) {
-        console.log("Error:", error instanceof Error ? error.message : "Unknown error");
-        return NextResponse.json({
-            message: "Error processing request",
-            error: error instanceof Error ? error.message : "Unknown error",
-        }, { status: 500 });
+export const POST = async (req, res) => {
+    const formData = await req.formData();
+    const file = formData.get("profile_pic");
+    if (!file) {
+        return NextResponse.json({ error: "No files received." }, { status: 400 });
     }
 
-}
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const sanitizedFilename = file.name.replaceAll(" ", "_");
+
+    const fileExtension = sanitizedFilename.substring(sanitizedFilename.lastIndexOf("."));
+
+    const timestamp = Date.now();
+
+    const uniqueFilename = `${timestamp}_${sanitizedFilename}`;
+    console.log(uniqueFilename);
+    try {
+        await writeFile(
+            path.join(process.cwd(), "uploads/" + uniqueFilename),
+            buffer
+        );
+        return NextResponse.json({ Message: "Success", status: 201 });
+    } catch (error) {
+        console.log("Error occured ", error);
+        return NextResponse.json({ Message: "Failed", status: 500 });
+    }
+};

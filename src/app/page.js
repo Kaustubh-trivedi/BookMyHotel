@@ -2758,7 +2758,7 @@ const page = () => {
                 {/*-------------------- footer-section --------------------*/}
                 <footer
                     className="footer"
-                    style={{ background: "url(assets/img/background/footer-bg.png)" }}
+                    style={{ background: "url(/assets/img/background/footer-bg.png)" }}
                 >
                     <div className="container">
                         <div className="footer-section">

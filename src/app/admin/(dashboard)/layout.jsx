@@ -15,7 +15,6 @@ export default function DashboardLayout({
             <div className="app-wrapper">
 
                 <Header />
-                {" "}
                 <Sidebar />
                 {children}
                 <Footer />
